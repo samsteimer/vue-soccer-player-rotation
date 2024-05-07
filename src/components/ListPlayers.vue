@@ -2,8 +2,8 @@
     <div>
         <h3>Team</h3>
         <ul>
-            <li v-for="player in team" v-bind:key="player.id">
-            <span>{{ player.name }} </span> <span>{{ player.position }}</span>
+            <li v-for="player in team" v-bind:key="player.id" draggable="true" @dragstart="dragStart(player, $event)">
+            <span>{{ player.name }} </span> <span>{{ player.preferredPosition }}</span>
             <button @click="deletePlayer(player.id)">delete</button>
             </li>
         </ul>
@@ -12,9 +12,8 @@
 </template>
 
 <script setup>
-import { defineProps } from 'vue';
 
-const emit = defineEmits(['playerDeleted'])
+const emit = defineEmits(['playerDeleted', 'playerDragged'])
 
 const props = defineProps({
     team: {
@@ -23,8 +22,18 @@ const props = defineProps({
     }
 });
 
+
 const deletePlayer = (id) => {
     emit('playerDeleted', id);
+};
+
+const dragStart = (player, event) => {
+    event.dataTransfer.setData('application/json', JSON.stringify(player)); // Set the entire player object
+
+    console.log('dragstart: ', player);
+
+    emit('playerDragged', player); // Emit the player object
 }
+
 
 </script>
