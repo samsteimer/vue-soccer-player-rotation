@@ -21,6 +21,7 @@
 <script setup>
 import { ref } from 'vue';
 
+const goalie = ref([null]);
 const defense = ref ([]);
 const midfield = ref ([]);
 const forward = ref ([]);
@@ -33,6 +34,7 @@ const createFormation = () => {
     const forwardCount = parseInt(forward.value);
 
     const formationData = {
+        goalie: goalie.value,
         defense: Array(defenseCount).fill(null),
         midfield: Array(midfieldCount).fill(null),
         forward: Array(forwardCount).fill(null)
@@ -40,6 +42,7 @@ const createFormation = () => {
 
     emit('formationSubmitted', formationData);
     
+    goalie.value = [null];
     defense.value = '';
     midfield.value = '';
     forward.value = '';

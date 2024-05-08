@@ -4,7 +4,7 @@
     <EnterPlayers @playerSubmitted="handlePlayerSubmitted" />
     <EnterFormation @formationSubmitted="handleFormationSubmitted"/>
     <ListPlayers :team="team" @playerDeleted="handlePlayerDeleted" />
-    <LineUp :formation="formation" @playerDropped="handlePlayerDropped"/>
+    <LineUp :formation="formation" @playerDropped="handlePlayerDropped" @addToTeam="handleAddToTeam"/>
   </div>
 
 
@@ -22,6 +22,7 @@ import { ref, onMounted } from 'vue';
 const team = ref ([]);
 
 const formation = ref({
+  goalie: [],
   defense: [],
   midfield: [],
   forward: []
@@ -69,28 +70,85 @@ const saveTeamToLocalStorage = () => {
 
 const handleFormationSubmitted = (formationData) => {
   formation.value = {
-    defense: Array(formationData.defense).fill(null),
-    midfield: Array(formationData.midfield).fill(null),
-    forward: Array(formationData.forward).fill(null)
+    goalie: [],
+    defense: formationData.defense.map(() => null),
+    midfield: formationData.midfield.map(() => null),
+    forward: formationData.forward.map(() => null),
   };
 
   saveTeamToLocalStorage();
 };
 
-const handlePlayerDropped = (player, position) => { // Change the parameter to accept the entire player object
+const handlePlayerDropped = (player, position, index) => {
   console.log('Player: ', player);
   if (player) {
-    const positionIndex = formation.value[position].findIndex(slot => slot === null);
-    if (positionIndex !== -1) {
-      formation.value[position][positionIndex] = player; // Store the player object
-      saveTeamToLocalStorage();
+    let teamIndex = -1;
+
+    // Find the index of the player in the team array
+    const playerIndex = team.value.findIndex(p => p.id === player.id);
+    if (playerIndex !== -1) {
+      // Remove the player from the team array
+      teamIndex = playerIndex;
+      team.value.splice(playerIndex, 1);
     } else {
-      console.error(`No available space in ${position} for the player.`);
+      console.error(`Player not found in team.`);
+    }
+    
+    // Assign the player to the specified index in the formation
+    if (position === 'goalie') {
+      if (formation.value.goalie.length === 0) {
+        formation.value.goalie.push(player);
+      } else {
+        console.error('Goalie position already occupied.');
+      }
+    } else {
+      if (formation.value[position][index] === null) {
+        formation.value[position][index] = player;
+      } else {
+        console.error(`Slot ${index} in ${position} is already occupied.`);
+      }
+    }
+
+    saveTeamToLocalStorage();
+
+    // If the player was successfully added to the lineup, update the team
+    if (teamIndex !== -1) {
+      console.log(`Player ${player.name} successfully added to ${position} at index ${index}.`);
+    } else {
+      console.error(`Player ${player.name} was not added to ${position} at index ${index}.`);
     }
   } else {
     console.error(`Player not found.`);
   }
-}
+};
+
+const handleAddToTeam = (player, position) => {
+  // Remove the specific player from the lineup at the given position
+  const positionArray = formation.value[position];
+  const playerIndex = positionArray.findIndex(slot => slot && slot.id === player.id);
+  
+  if (position === 'goalie') {
+    formation.value.goalie = [];
+    saveTeamToLocalStorage();
+  } else {
+
+    if (playerIndex !== -1) {
+      // Instead of removing the player, set the slot to null
+      positionArray[playerIndex] = null;
+      saveTeamToLocalStorage();
+    } else {
+      console.error(`Player not found in ${position}.`);
+      return; // Exit the function if the player is not found in the position
+    }
+  }
+  // Add the player to the team if not already present
+  const isPlayerInTeam = team.value.some(p => p.id === player.id);
+  if (!isPlayerInTeam) {
+    team.value.push(player);
+    saveTeamToLocalStorage();
+  }
+};
+
 
 
 </script>
