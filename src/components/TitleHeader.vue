@@ -1,3 +1,3 @@
 <template>
-    <h2>Soccer Player Rotation</h2>
+    <h2 class="title">Soccer Player Rotation</h2>
 </template>

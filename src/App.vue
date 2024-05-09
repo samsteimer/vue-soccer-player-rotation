@@ -1,10 +1,16 @@
 <template>
-  <div>
+  <div class="container center">
     <TitleHeader />
-    <EnterPlayers @playerSubmitted="handlePlayerSubmitted" />
-    <EnterFormation @formationSubmitted="handleFormationSubmitted"/>
-    <ListPlayers :team="team" @playerDeleted="handlePlayerDeleted" />
-    <LineUp :formation="formation" @playerDropped="handlePlayerDropped" @addToTeam="handleAddToTeam"/>
+    <div class="container columns">
+      <div class="first-column column">
+        <EnterPlayers @playerSubmitted="handlePlayerSubmitted" />
+        <EnterFormation @formationSubmitted="handleFormationSubmitted"/>
+      </div>
+      <div class="second-column column">
+        <ListPlayers :team="team" @playerDeleted="handlePlayerDeleted" />
+        <LineUp :formation="formation" @playerDropped="handlePlayerDropped" @addToTeam="handleAddToTeam"/>
+      </div>
+    </div>
   </div>
 
 
@@ -149,6 +155,17 @@ const handleAddToTeam = (player, position) => {
   }
 };
 
-
-
 </script>
+
+<style scoped>
+.first-column {
+  max-width: 300px;
+  margin-left: 20px;
+}
+
+.second-column {
+  max-width: 500px;
+  margin-right: 20px;
+  margin-left: 20px
+}
+</style>

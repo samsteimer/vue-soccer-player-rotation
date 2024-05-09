@@ -1,22 +1,84 @@
 <template>
-    <div>
-        <h3>Formation: </h3>
-        <form @submit.prevent="createFormation">
-            <div>
-                <label for="defense-setup">Defense</label>
-                <input type="number" id="defense-setup" v-model="defense">
-                <label for="midfield-setup">Midfield</label>
-                <input type="number" id="midfield-setup" v-model="midfield">
-                <label for="forward-setup">Forward</label>
-                <input type="number" id="forward-setup" v-model="forward">
+    <div class="box formation-box">
+      <h3 class="subtitle">Formation</h3>
+      <form @submit.prevent="createFormation">
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">Defense</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <div class="control">
+                <input class="input" type="number" v-model="defense" placeholder="Defense count">
+              </div>
             </div>
-            <div>
-                <button type="submit">Create</button>
+          </div>
+        </div>
+  
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">Midfield</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <div class="control">
+                <input class="input" type="number" v-model="midfield" placeholder="Midfield count">
+              </div>
             </div>
-        </form>
+          </div>
+        </div>
+  
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">Forward</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <div class="control">
+                <input class="input" type="number" v-model="forward" placeholder="Forward count">
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <div class="field is-horizontal">
+          <div class="field-body">
+            <div class="field">
+              <div class="control">
+                <button class="button" type="submit">Create</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
     </div>
-
 </template>
+  
+<style scoped>
+.formation-box {
+    padding: 0.75rem;
+}
+  
+.field {
+        margin-bottom: 0.5rem;
+}
+
+.button {
+    border: solid 1px;
+    border-radius: 10px;
+    background-color: aquamarine;
+    max-height: 35px;
+   
+}
+.field.is-horizontal > .field-body > .field {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+
+</style>
+  
 
 <script setup>
 import { ref } from 'vue';

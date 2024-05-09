@@ -1,21 +1,19 @@
 <template>
-  <div>
-    <h2>Lineup</h2>
+  <div class="box">
+    <h2 class="subtitle mb-0">Lineup</h2>
     <div v-if="formation">
       <div v-for="(players, position) in formation" :key="position">
-        <h3>{{ position }}</h3>
-        <div v-if="position === 'goalie'">
-          <div class="player-box" @dragover.prevent="onDragOver" @drop="onDrop(position, index, $event)">
+        <h3 class="is-flex is-justify-content-center">{{ position.toUpperCase() }}</h3>
+        <div class="is-flex is-justify-content-center" v-if="position === 'goalie'">
+          <div class="player-box box" @dragover.prevent="onDragOver" @drop="onDrop(position, index, $event)">
+            <button class="delete is-small" v-if="players[0]" @click="addToTeam(players[0], position)"></button>
             <span v-if="players[0]">{{ players[0].name }}</span>
-            <button v-if="players[0]" @click="addToTeam(players[0], position)">X</button>
-            <button v-if="!players[0]" disabled>X</button>
           </div>
         </div>
-        <div v-else>
-          <div v-for="(player, index) in players" :key="index" class="player-box" @dragover.prevent="onDragOver" @drop="onDrop(position, index, $event)">
+        <div v-else class="is-flex is-justify-content-center">
+          <div v-for="(player, index) in players" :key="index" class="player-box box" @dragover.prevent="onDragOver" @drop="onDrop(position, index, $event)">
+            <button class="delete is-small" v-if="player" @click="addToTeam(player, position)"></button>
             <span v-if="player">{{ player.name }}</span>
-            <button v-if="player" @click="addToTeam(player, position)">X</button>
-            <button v-if="!player" disabled>X</button>
           </div>
         </div>
       </div>
@@ -69,17 +67,25 @@
         console.log('Drag over event');
     }
 
-  </script>
+</script>
   
-  <style scoped>
-  .player-box {
+<style scoped>
+.player-box {
     width: 100px;
     height: 50px;
     background-color: lightgray;
-    margin-bottom: 5px;
+    margin-bottom: 1px;
+    margin-right: 5px;
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-  </style>
+    font-size: 0.9rem;
+}
+
+.delete {
+    margin-right: 0.25rem;
+}
+
+
+</style>
   

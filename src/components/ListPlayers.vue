@@ -1,10 +1,13 @@
 <template>
-    <div>
-        <h3>Team</h3>
-        <ul>
-            <li v-for="player in team" v-bind:key="player.id" draggable="true" @dragstart="dragStart(player, $event)">
-            <span>{{ player.name }} </span> <span>{{ player.preferredPosition }}</span>
-            <button @click="deletePlayer(player.id)">delete</button>
+    <div class="box">
+        <h3 class="subtitle">Bench</h3>
+        <ul class="columns is-multiline">
+            <li class="column half" v-for="player in team" v-bind:key="player.id" >
+                <div class="box player-box" draggable="true" @dragstart="dragStart(player, $event)">
+                    <button class="delete is-small" @click="deletePlayer(player.id)"></button>
+                    <span>{{ player.name }} </span> 
+                    <span class="position">{{ player.preferredPosition }}</span>
+                </div> 
             </li>
         </ul>
     </div>
@@ -37,3 +40,36 @@ const dragStart = (player, event) => {
 
 
 </script>
+
+<style scoped>
+.player-box {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    max-height: 30px;
+    max-width: 210px;
+    margin: -.75rem 0;
+    margin-bottom: 0.25rem;
+    background-color: #f4f4f4;
+}
+
+.player-box span {
+    margin-left: 0.5rem;
+}
+
+.delete {
+    margin-left: 0.1rem;
+}
+
+.box {
+    padding: .5rem; 
+}
+
+.position {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    margin-left: auto;
+}
+
+</style>
