@@ -45,23 +45,6 @@
       </form>
     </div>
   </template>
-  
-  <style scoped>
-  .player-entry-box {
-    padding: 0.75rem;
-  }
-  
-  .field {
-    margin-bottom: 0.5rem;
-  }
-  
-  .input, .select {
-    width: 100%; /* Make input and select full width */
-  }
-  
-  
-  </style>
-  
 
 <script setup>
 import { ref } from 'vue';
@@ -88,3 +71,18 @@ const onSubmit = () => {
     preferredPosition.value = '';
 }
 </script>
+
+<style scoped>
+.player-entry-box {
+  padding: 0.75rem;
+}
+
+.field {
+  margin-bottom: 0.5rem;
+}
+
+.input, .select {
+  width: 100%; /* Make input and select full width */
+}
+
+</style>

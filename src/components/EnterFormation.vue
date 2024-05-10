@@ -53,25 +53,7 @@
       </form>
     </div>
 </template>
-  
-<style scoped>
-.formation-box {
-    padding: 0.75rem;
-}
-  
-.field {
-        margin-bottom: 0.5rem;
-}
 
-.field.is-horizontal > .field-body > .field {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-}
-
-
-</style>
-  
 
 <script setup>
 import { ref } from 'vue';
@@ -104,3 +86,21 @@ const createFormation = () => {
 }
 
 </script>
+  
+<style scoped>
+.formation-box {
+    padding: 0.75rem;
+}
+  
+.field {
+        margin-bottom: 0.5rem;
+}
+
+.field.is-horizontal > .field-body > .field {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+</style>
+  

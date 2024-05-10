@@ -25,7 +25,6 @@ const props = defineProps({
     }
 });
 
-
 const deletePlayer = (id) => {
     emit('playerDeleted', id);
 };
@@ -37,7 +36,6 @@ const dragStart = (player, event) => {
 
     emit('playerDragged', player); // Emit the player object
 }
-
 
 </script>
 
