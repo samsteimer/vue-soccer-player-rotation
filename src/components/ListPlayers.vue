@@ -1,5 +1,5 @@
 <template>
-    <div class="box">
+    <div class="box list">
         <h3 class="subtitle">Bench</h3>
         <ul class="columns is-multiline">
             <li class="column half" v-for="player in team" v-bind:key="player.id" >
@@ -64,6 +64,11 @@ const dragStart = (player, event) => {
 
 .box {
     padding: .5rem; 
+    
+}
+
+.list {
+    min-width: 460px;
 }
 
 .position {

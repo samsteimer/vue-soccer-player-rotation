@@ -59,12 +59,7 @@
     width: 100%; /* Make input and select full width */
   }
   
-  .button {
-    border: solid 1px;
-    border-radius: 10px;
-    background-color: aquamarine;
-    max-height: 35px;
-  }
+  
   </style>
   
 

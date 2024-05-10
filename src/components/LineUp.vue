@@ -18,54 +18,55 @@
         </div>
       </div>
     </div>
+    <div>
+      <button class="button" @click="saveLineup">Save Lineup</button>
+    </div>
   </div>
 </template>
 
   
-  <script setup>
-  import { defineEmits } from 'vue';
+<script setup>
+import { defineEmits } from 'vue';
   
-  const emit = defineEmits(['playerDropped', 'addToTeam']);
+const emit = defineEmits(['playerDropped', 'addToTeam', 'saveLineup']);
   
-  const props = defineProps({
-    formation: {
-      type: Object,
-      default: null
-    }
-  });
-
-
-
-  const onDrop = (position, index, event) => {
-    console.log('Event: ', event);
-    event.preventDefault();
-    if (position === 'goalie') { // Check if position is 'goalie'
-      dropPlayer('goalie', index, event); // Call dropPlayer with position 'goalie'
-    } else {
-      dropPlayer(position, index, event);
-    }
-  };
-
-
-  const dropPlayer = (position, index, event) => {
-    const playerData = event.dataTransfer.getData('application/json');
-    console.log('Player data:', playerData);
-    
-    // Parse the player object
-    const player = JSON.parse(playerData);
-
-    console.log('Player dropped:', player);
-    emit('playerDropped', player, position, index);
-  };
-
-  const addToTeam = (player, position) => {
-    emit('addToTeam', player, position);
+const props = defineProps({
+  formation: {
+    type: Object,
+    default: null
   }
+});
 
+const onDrop = (position, index, event) => {
+  console.log('Event: ', event);
+  event.preventDefault();    if (position === 'goalie') { // Check if position is 'goalie'
+    dropPlayer('goalie', index, event); // Call dropPlayer with position 'goalie'
+  } else {
+    dropPlayer(position, index, event);
+  }
+};
 
-    const onDragOver = (event) => {
-        console.log('Drag over event');
-    }
+const dropPlayer = (position, index, event) => {
+  const playerData = event.dataTransfer.getData('application/json');
+  console.log('Player data:', playerData);
+        // Parse the player object
+  const player = JSON.parse(playerData);
+
+  console.log('Player dropped:', player);
+  emit('playerDropped', player, position, index);
+};
+
+const addToTeam = (player, position) => {
+  emit('addToTeam', player, position);
+}
+
+const saveLineup = () => {
+  emit('saveLineup')
+}
+
+const onDragOver = (event) => {
+  console.log('Drag over event');
+}
 
 </script>
   
@@ -84,6 +85,10 @@
 
 .delete {
     margin-right: 0.25rem;
+}
+
+.button {
+  margin-top: 10px;
 }
 
 

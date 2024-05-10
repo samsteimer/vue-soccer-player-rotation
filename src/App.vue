@@ -1,4 +1,5 @@
 <template>
+
   <div class="container center">
     <TitleHeader />
     <div class="container columns">
@@ -8,11 +9,13 @@
       </div>
       <div class="second-column column">
         <ListPlayers :team="team" @playerDeleted="handlePlayerDeleted" />
-        <LineUp :formation="formation" @playerDropped="handlePlayerDropped" @addToTeam="handleAddToTeam"/>
+        <LineUp :formation="formation" @playerDropped="handlePlayerDropped" @addToTeam="handleAddToTeam" @saveLineup="handleSaveLineup"/>
+      </div>  
+      <div class="third-column column">
+        <LineUpCard :lineup="lineup" @removeLineup="handleRemoveLineup" />
       </div>
     </div>
   </div>
-
 
 </template>
 
@@ -22,6 +25,7 @@ import EnterPlayers from './components/EnterPlayers.vue';
 import ListPlayers from './components/ListPlayers.vue';
 import EnterFormation from './components/EnterFormation.vue';
 import LineUp from './components/LineUp.vue';
+import LineUpCard from './components/LineUpCard.vue';
 
 import { ref, onMounted } from 'vue';
 
@@ -34,9 +38,13 @@ const formation = ref({
   forward: []
 });
 
+const lineup = ref([]);
+const showLineupCard = ref(false);
+
 onMounted(() => {
   const savedTeam = JSON.parse(localStorage.getItem('team'));
   const savedFormation = JSON.parse(localStorage.getItem('formation'));
+  const savedLineup = JSON.parse(localStorage.getItem('lineup'))
 
   if (savedTeam) {
     team.value = savedTeam;
@@ -44,6 +52,10 @@ onMounted(() => {
   if (savedFormation) {
     formation.value = savedFormation;
   }
+  if (savedLineup) {
+    lineup.value = savedLineup;
+  }
+
 })
 
 const handlePlayerSubmitted = (player) => {
@@ -72,6 +84,7 @@ const handlePlayerDeleted = (id) => {
 const saveTeamToLocalStorage = () => {
   localStorage.setItem('team', JSON.stringify(team.value));
   localStorage.setItem('formation', JSON.stringify(formation.value));
+  localStorage.setItem('lineup', JSON.stringify(lineup.value));
 };
 
 const handleFormationSubmitted = (formationData) => {
@@ -154,6 +167,22 @@ const handleAddToTeam = (player, position) => {
     saveTeamToLocalStorage();
   }
 };
+
+const handleSaveLineup = () => {
+  if (formation.value !== null && !Object.values(formation.value).some(position => position.some(player => player === null))) {
+    lineup.value.push({ ...formation.value });
+    saveTeamToLocalStorage();
+    
+  } else {
+    alert('Players missing from lineup.');
+    console.error('Formation contains null values. Cannot save lineup.');
+  }
+};
+
+const handleRemoveLineup = (index) => {
+  lineup.value.splice(index, 1);
+  saveTeamToLocalStorage();
+}
 
 </script>
 

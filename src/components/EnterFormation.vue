@@ -63,13 +63,6 @@
         margin-bottom: 0.5rem;
 }
 
-.button {
-    border: solid 1px;
-    border-radius: 10px;
-    background-color: aquamarine;
-    max-height: 35px;
-   
-}
 .field.is-horizontal > .field-body > .field {
   display: flex;
   justify-content: flex-start;
