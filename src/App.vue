@@ -39,7 +39,6 @@ const formation = ref({
 });
 
 const lineup = ref([]);
-const showLineupCard = ref(false);
 
 onMounted(() => {
   const savedTeam = JSON.parse(localStorage.getItem('team'));
@@ -82,10 +81,16 @@ const handlePlayerDeleted = (id) => {
 };
 
 const saveTeamToLocalStorage = () => {
-  localStorage.setItem('team', JSON.stringify(team.value));
-  localStorage.setItem('formation', JSON.stringify(formation.value));
-  localStorage.setItem('lineup', JSON.stringify(lineup.value));
+  localStorage.setItem('team', JSON.stringify(team.value));  
 };
+
+const saveFormationToLocalStorage = () => {
+  localStorage.setItem('formation', JSON.stringify(formation.value));
+};
+
+const saveLineupToLocalStorage = () => {
+  localStorage.setItem('lineup', JSON.stringify(lineup.value));
+}
 
 const handleFormationSubmitted = (formationData) => {
   formation.value = {
@@ -95,7 +100,7 @@ const handleFormationSubmitted = (formationData) => {
     forward: formationData.forward.map(() => null),
   };
 
-  saveTeamToLocalStorage();
+  saveFormationToLocalStorage();
 };
 
 const handlePlayerDropped = (player, position, index) => {
@@ -129,6 +134,7 @@ const handlePlayerDropped = (player, position, index) => {
     }
 
     saveTeamToLocalStorage();
+    saveFormationToLocalStorage();
 
     // If the player was successfully added to the lineup, update the team
     if (teamIndex !== -1) {
@@ -170,8 +176,8 @@ const handleAddToTeam = (player, position) => {
 
 const handleSaveLineup = () => {
   if (formation.value !== null && !Object.values(formation.value).some(position => position.some(player => player === null))) {
-    lineup.value.push({ ...formation.value });
-    saveTeamToLocalStorage();
+    lineup.value.push(JSON.parse(JSON.stringify(formation.value)));
+    saveLineupToLocalStorage();
     
   } else {
     alert('Players missing from lineup.');
@@ -181,7 +187,7 @@ const handleSaveLineup = () => {
 
 const handleRemoveLineup = (index) => {
   lineup.value.splice(index, 1);
-  saveTeamToLocalStorage();
+  saveLineupToLocalStorage();
 }
 
 </script>

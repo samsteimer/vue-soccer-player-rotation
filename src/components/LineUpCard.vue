@@ -1,10 +1,10 @@
 <template>
-    <div class="box">
+    <div class="">
       <div v-if="lineup.length === 0">
         <p>No lineups available.</p>
       </div>
       <div v-else>
-        <div v-for="(lineupData, index) in lineup" :key="index">
+        <div class="box" v-for="(lineupData, index) in lineup" :key="index">
           <div>
             <h2 class="subtitle mb-0">Lineup {{ index + 1 }}</h2>
             <h3 class="is-flex is-justify-content-center">GOALIE</h3>
