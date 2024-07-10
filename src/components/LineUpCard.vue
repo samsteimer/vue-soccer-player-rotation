@@ -58,7 +58,7 @@
   
   const emit = defineEmits(['removeLineup']);
   
-  const props = defineProps({
+  defineProps({
     lineup: Array,
     default: () => []
   });

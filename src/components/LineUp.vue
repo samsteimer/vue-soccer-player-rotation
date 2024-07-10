@@ -26,11 +26,11 @@
 
   
 <script setup>
-import { defineEmits } from 'vue';
+
   
 const emit = defineEmits(['playerDropped', 'addToTeam', 'saveLineup']);
   
-const props = defineProps({
+defineProps({
   formation: {
     type: Object,
     default: null
@@ -64,7 +64,7 @@ const saveLineup = () => {
   emit('saveLineup')
 }
 
-const onDragOver = (event) => {
+const onDragOver = () => {
   console.log('Drag over event');
 }
 

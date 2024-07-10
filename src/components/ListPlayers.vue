@@ -18,7 +18,7 @@
 
 const emit = defineEmits(['playerDeleted', 'playerDragged'])
 
-const props = defineProps({
+defineProps({
     team: {
         type: Array,
         required: true
